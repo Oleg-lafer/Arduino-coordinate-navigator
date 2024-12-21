@@ -89,14 +89,15 @@ void setup() {
   pinMode(green_light, OUTPUT);
   pinMode(buzzer, OUTPUT);
 
-  digitalWrite(red_light, HIGH);
+  digitalWrite(red_light, LOW);
   digitalWrite(yellow_light, LOW);
-  digitalWrite(green_light, HIGH);
+  digitalWrite(green_light, LOW);
   digitalWrite(buzzer, LOW);
 }
 
 void loop() {
   get_path_coordinates();
+  delay
   
   start_traffic_light_and_buzzer();
 
@@ -109,6 +110,9 @@ void loop() {
 }
 
 void get_path_coordinates(){
+  digitalWrite(red_light, HIGH);
+  digitalWrite(yellow_light, LOW);
+  digitalWrite(green_light, HIGH);
   while (stored_counter < max_stored_points) {
     get_joy_coords(joy_coords);
     filtered_coords[0] = low_pass_filter(joy_coords[0], filtered_coords[0]);
@@ -119,6 +123,9 @@ void get_path_coordinates(){
     delay(100);
   }
   print_stored_coords();
+  digitalWrite(red_light, LOW);
+  digitalWrite(yellow_light, LOW);
+  digitalWrite(green_light, LOW);
 }
 
 void calculateAngle(int list_ind, int xy_list[max_stored_points][2], int* rot_time_and_dir, int* straight_time) {
@@ -173,6 +180,9 @@ void move(int V_left, int V_right) {
 }
 
 void start_traffic_light_and_buzzer(){
+  digitalWrite(red_light, LOW);
+  digitalWrite(yellow_light, LOW);
+  digitalWrite(green_light, LOW);
   delay(traffic_light_time);
 
   digitalWrite(red_light, HIGH);
