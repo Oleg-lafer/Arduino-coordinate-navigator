@@ -15,11 +15,11 @@ const int RightBackward = 8;
 
 const int rot_speed = 7;
 const int straight_speed = 7;
-const int delays_time = 200;
+const int delays_time = 500;
 
 // Define driving propotionals
-const double straight_length_2_time = 3;
-const double rot_ang_2_time = 1.8;
+const double straight_length_2_time = 1.5;
+const double rot_ang_2_time = 2.25;
 
 // Define traffic light
 const int red_light = 13;
@@ -30,23 +30,13 @@ const int traffic_light_time = 300;
 const int buzzer_time = 100;
 
 // Define the list of (x,y) pairs
-const int constant_xy_list_length = 15;
+const int constant_xy_list_length = 5;
 int constant_xy_list[constant_xy_list_length][2] = {
-  { 512, 508 },
-  { 512, 432 },
-  { 553, 496 },
-  { 547, 575 },
-  { 485, 642 },
-  { 412, 699 },
-  { 351, 695 },
-  { 298, 667 },
-  { 253, 643 },
-  { 215, 601 },
-  { 199, 542 },
-  { 286, 533 },
-  { 349, 526 },
-  { 411, 519 },
-  { 467, 513 },
+  { 0, 0 },
+  { 1, 1 },
+  { 500, 500 },
+  { 1, 1 },
+  { 0, 0 },
 };
 
 void setup() {
@@ -182,15 +172,17 @@ void drive_according_to_xy_list(int xy_list[constant_xy_list_length][2], int lis
     int rot_time_and_dir, straight_time;
     calculateAngle(list_ind, xy_list, &rot_time_and_dir, &straight_time);
 
-    if (rot_time_and_dir > 0) {
-      move(rot_speed, -rot_speed);
-    } else {
-      move(-rot_speed, rot_speed);
-    }
-    delay(abs(rot_time_and_dir));
+    if (rot_time_and_dir != 0){
+      if (rot_time_and_dir > 0) {
+        move(rot_speed, -rot_speed);
+      } else {
+        move(-rot_speed, rot_speed);
+      }
+      delay(abs(rot_time_and_dir));
 
-    move(0, 0);
-    delay(delays_time);
+      move(0, 0);
+      delay(delays_time);
+    }
 
     move(straight_speed, straight_speed);
     delay(straight_time);
